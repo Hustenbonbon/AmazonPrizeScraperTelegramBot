@@ -22,23 +22,16 @@ def registerProduct(bot, update):
     print(text)
     if (".amazon.de/" not in text):
         bot.send_message(chat_id=update.message.chat_id, text="Your message does not contain an amazon.de link!")
-        print("test12")
     else:
-        print("test0")
         parts = text.split()
         if (len(parts) != 2):
-            print("test5")
             bot.send_message(chat_id=update.message.chat_id, text="The format of your request was wrong. Please send it like '/register https://smile.amazon.de/gp/product/B07GDR2LYK")
         else:
-            print("testX")
             watchedProducts.append([update.message.chat_id,parts[1]])
-            print(parts[1])
             title, price = check_price(parts[1])
-            print("test2")
             bot.send_message(chat_id=update.message.chat_id, text=f"Checking for {title} with current price {price} € daily")
 
 def check_price(url):
-    print("url " + url)
     page = requests.get(url, headers=HEADERS)
     soup = BeautifulSoup(page.content, 'html.parser')
 
